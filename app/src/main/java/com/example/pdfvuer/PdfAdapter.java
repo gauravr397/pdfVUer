@@ -1,14 +1,23 @@
 package com.example.pdfvuer;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.util.List;
+
 public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> {
     private Context context;
     private List<File> pdfFiles;
+
+    public PdfAdapter(Context context, List<File> pdfFiles) {
+        this.context = context;
+        this.pdfFiles = pdfFiles;
+    }
 
     @NonNull
     @Override
