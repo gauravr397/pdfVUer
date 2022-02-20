@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Toast;
@@ -21,7 +22,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnPdfFileSelectListner {
 
     private PdfAdapter pdfAdapter;
     private List<File> pdfList;
@@ -82,7 +83,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         pdfList = new ArrayList<>();
         pdfList.addAll(findPdf(Environment.getExternalStorageDirectory()));
-        pdfAdapter = new PdfAdapter(this, pdfList);
+        pdfAdapter = new PdfAdapter(this, pdfList, this);
         recyclerView.setAdapter(pdfAdapter);
+    }
+
+    @Override
+    public void onPdfSelected(File file) {
+        startActivity(new Intent(MainActivity.this, DocActivity.class).putExtra("path", file.getAbsolutePath()));
     }
 }

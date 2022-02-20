@@ -2,6 +2,7 @@ package com.example.pdfvuer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,10 +14,12 @@ import java.util.List;
 public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> {
     private Context context;
     private List<File> pdfFiles;
+    private OnPdfFileSelectListner listner;
 
-    public PdfAdapter(Context context, List<File> pdfFiles) {
+    public PdfAdapter(Context context, List<File> pdfFiles, OnPdfFileSelectListner listner) {
         this.context = context;
         this.pdfFiles = pdfFiles;
+        this.listner = listner;
     }
 
     @NonNull
@@ -29,6 +32,13 @@ public class PdfAdapter extends RecyclerView.Adapter<PdfViewHolder> {
     public void onBindViewHolder(@NonNull PdfViewHolder holder, int position) {
         holder.tvName.setText(pdfFiles.get(position).getName());
         holder.tvName.setSelected(true);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listner.onPdfSelected(pdfFiles.get(position));
+            }
+        });
 
     }
 
